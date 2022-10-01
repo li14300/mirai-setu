@@ -28,7 +28,7 @@ class LoliconRequester(private val subject: Group, private val source: MessageSo
         try {
             val response: String =
                 KtorUtils.proxyClient.get(
-                    "http://api.lolicon.app/setu?r18=${
+                    "http://api.lolicon.app/setu/v2?r18=${
                         SetuData.groupPolicy[subject.id]
                     }"
                 )
@@ -49,7 +49,7 @@ class LoliconRequester(private val subject: Group, private val source: MessageSo
         try {
             val setuResponse: String =
                 KtorUtils.proxyClient.get(
-                    "http://api.lolicon.app/setu?keyword=${keyword}&r18=${
+                    "http://api.lolicon.app/setu/v2?keyword=${keyword}&r18=${
                         SetuData.groupPolicy[subject.id]
                     }"
                 )
