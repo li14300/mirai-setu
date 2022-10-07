@@ -1,12 +1,12 @@
 package moe.ruabbit.mirai.search
 
+import moe.ruabbit.mirai.KtorUtils
+import moe.ruabbit.mirai.PluginMain
+import moe.ruabbit.mirai.config.SettingsConfig
 import io.ktor.client.request.*
 import io.ktor.util.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import moe.ruabbit.mirai.KtorUtils
-import moe.ruabbit.mirai.PluginMain
-import moe.ruabbit.mirai.config.SettingsConfig
 import net.mamoe.mirai.contact.Contact
 import net.mamoe.mirai.message.data.Image
 import net.mamoe.mirai.message.data.Image.Key.queryUrl
@@ -16,8 +16,8 @@ import net.mamoe.mirai.message.data.PlainText
 import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
 import java.io.InputStream
 import java.net.URLDecoder
+import java.nio.charset.Charset
 
-@Suppress("BlockingMethodInNonBlockingContext")
 class SauceNaoRequester(private val subject: Contact) {
 
     private var result: SauceNaoResponse.Result? = null
@@ -32,7 +32,7 @@ class SauceNaoRequester(private val subject: Contact) {
                         "api_key=${SettingsConfig.sauceNaoApiKey}&" +
                         "db=${SettingsConfig.sauceNaoDataBaseMode}&" +
                         "numres=1&" +
-                        "url=${URLDecoder.decode(image.queryUrl(), "utf-8")}"
+                        "url=${URLDecoder.decode(image.queryUrl(),"utf-8")}"
                 )
             PluginMain.logger.info(json)
             parseJson(json)
@@ -52,7 +52,7 @@ class SauceNaoRequester(private val subject: Contact) {
     }
 
     @KtorExperimentalAPI
-    suspend fun sendResult(message: MessageChain) {
+    suspend fun sendResult(message:MessageChain) {
         val image = KtorUtils.normalClient.get<InputStream>(result!!.header.thumbnail).uploadAsImage(subject)
         val msg = when (result!!.header.index_id) {
             // Index #5: Pixiv Images

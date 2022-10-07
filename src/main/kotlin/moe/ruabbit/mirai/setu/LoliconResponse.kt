@@ -2,11 +2,11 @@ package moe.ruabbit.mirai.setu
 
 import kotlinx.serialization.Serializable
 
+
+
 @Serializable
 data class LoliconResponse(
-    val code: Int,
-    val msg: String = "",
-    val count: Int,
+    val error: String = "",
     val data: List<SetuImageInfo>? = null
 ) {
     @Serializable
@@ -16,10 +16,18 @@ data class LoliconResponse(
         val uid: Int,
         val title: String,
         val author: String,
-        val url: String,
+        val urls: SetuImageUrl,
         val r18: Boolean,
         val width: Int,
         val height: Int,
-        val tags: List<String>
-    )
+        val tags: List<String>,
+        val ext: String,
+        val uploadDate: Long
+    ){
+        @Serializable
+        data class SetuImageUrl(
+            val regular: String
+        )
+    }
 }
+

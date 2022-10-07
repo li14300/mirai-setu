@@ -1,14 +1,14 @@
 package moe.ruabbit.mirai.setu
 
+import moe.ruabbit.mirai.KtorUtils
+import moe.ruabbit.mirai.config.MessageConfig
+import moe.ruabbit.mirai.config.SettingsConfig
+import moe.ruabbit.mirai.data.SetuData
 import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.util.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import moe.ruabbit.mirai.KtorUtils
-import moe.ruabbit.mirai.config.MessageConfig
-import moe.ruabbit.mirai.config.SettingsConfig
-import moe.ruabbit.mirai.data.SetuData
 import net.mamoe.mirai.contact.Contact.Companion.sendImage
 import net.mamoe.mirai.contact.Group
 import net.mamoe.mirai.message.MessageReceipt
@@ -26,21 +26,17 @@ class FantasyZoneRequester(private val subject: Group, private val source: Messa
     suspend fun requestSetu(): Boolean {
         try {
             // TODO 增加不使用代理的配置
-            imageResponse = Json { coerceInputValues = true }.decodeFromString(
+            imageResponse = Json{coerceInputValues = true}.decodeFromString(
                 KtorUtils.proxyClient.get(
                     "https://api.fantasyzone.cc/tu?type=json&class=${
-                        SettingsConfig.fantasyZoneType.replace(
-                            "random",
+                        SettingsConfig.fantasyZoneType.replace("random",
                             kotlin.run {
                                 val random = Math.random()
-                                if (SetuData.groupPolicy[subject.id] == 1)
-                                    "pixiv"
-                                else
-                                    when {
-                                        random < 0.33 -> "pc"
-                                        random < 0.66 -> "m"
-                                        else -> "pixiv"
-                                    }
+                                when {
+                                    random < 0.33 -> "pc"
+                                    random < 0.66 -> "m"
+                                    else -> "pixiv"
+                                }
                             })
                     }&r18=${SetuData.groupPolicy[subject.id]}"
                 )
@@ -59,7 +55,7 @@ class FantasyZoneRequester(private val subject: Group, private val source: Messa
             val jsonResponse: String =
                 KtorUtils.proxyClient.get("https://api.fantasyzone.cc/tu/search.php?search=${search}")  //TODO 适配直接取图
 
-            imageResponse = Json {
+            imageResponse = Json{
                 coerceInputValues = true
             }.decodeFromString(jsonResponse)
 
@@ -85,8 +81,6 @@ class FantasyZoneRequester(private val subject: Group, private val source: Messa
         try {
             setuImageMsg = subject.sendImage(getImage())
             // todo 捕获群上传失败的错误信息返回发送失败的信息（涩图被腾讯拦截）
-        } catch (e: IllegalStateException) {
-            subject.sendMessage(source.quote() + "图片上传失败，可能被腾讯拦截")
         } catch (e: ClientRequestException) {
             subject.sendMessage(MessageConfig.setuImage404)
         } catch (e: Throwable) {

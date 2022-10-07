@@ -10,7 +10,7 @@ data class FantasyZoneResponse(
     val userId: String = "null",
     val userName: String = "null",
     val title: String = "null",
-    val tags: List<String> = listOf(),
+    val tags: List<String>  = listOf(),
     val width: String = "null",
     val height: String = "null",
     val url: String = "null"

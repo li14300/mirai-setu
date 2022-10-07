@@ -1,8 +1,5 @@
 package moe.ruabbit.mirai
 
-import io.ktor.client.request.*
-import io.ktor.util.*
-import kotlinx.coroutines.launch
 import moe.ruabbit.mirai.KtorUtils.normalClient
 import moe.ruabbit.mirai.config.CommandConfig
 import moe.ruabbit.mirai.config.MessageConfig
@@ -10,6 +7,9 @@ import moe.ruabbit.mirai.config.SettingsConfig
 import moe.ruabbit.mirai.data.SetuData
 import moe.ruabbit.mirai.search.searchListenerRegister
 import moe.ruabbit.mirai.setu.setuListenerRegister
+import io.ktor.client.request.*
+import io.ktor.util.*
+import kotlinx.coroutines.launch
 import net.mamoe.mirai.console.permission.Permission
 import net.mamoe.mirai.console.permission.PermissionId
 import net.mamoe.mirai.console.permission.PermissionService
@@ -45,12 +45,10 @@ object PluginMain : KotlinPlugin(
         MessageConfig.reload()   //初始化自定义回复
         adminPermission = PermissionService.INSTANCE.register(
             PermissionId(name, "admin"),
-            "管理员权限"
+            "Admin Permission"
         )
         setuListenerRegister()
         searchListenerRegister()
-
-
     }
 
     @KtorExperimentalAPI
@@ -91,7 +89,7 @@ object PluginMain : KotlinPlugin(
 
         // git给文件加了一个回车我能怎么办呢
         if (newversion.equals(version.toString() + "\n"))
-            logger.info("色图插件当前版本:$version")
+            logger.info("色图插件当前版本:$version，适配loliapi v2魔改版")
         else
             logger.warning("色图插件当前版本：$version，检查到新版本：${newversion}请到 https://github.com/bloodyrabbit/mirai-setu/releases 更新")
     }

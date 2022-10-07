@@ -4,7 +4,7 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
         jcenter()
-        maven("https://dl.bintray.com/kotlin/kotlin-eap")
+        maven("https://status.bintray.com/kotlin/kotlin-eap")
     }
 }
 rootProject.name = "mirai-setu"

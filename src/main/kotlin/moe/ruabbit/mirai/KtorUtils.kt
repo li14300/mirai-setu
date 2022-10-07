@@ -1,12 +1,11 @@
 package moe.ruabbit.mirai
 
+import moe.ruabbit.mirai.config.SettingsConfig
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.util.*
-import moe.ruabbit.mirai.config.SettingsConfig
 
-@Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
 object KtorUtils {
     // 使用代理的ktor客户端
     @OptIn(KtorExperimentalAPI::class)

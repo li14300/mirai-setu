@@ -1,6 +1,6 @@
 plugins {
     val kotlinVersion = "1.5.10"
-    val miraiVersion = "2.7-M2"
+    val miraiVersion = "2.10.0"
 
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "moe.ruabbit"
-version = "1.2.2"
+version = "1.2.2.1"
 
 dependencies {
      // implementation("com.alibaba:fastjson:1.2.73")
@@ -18,5 +18,5 @@ repositories {
     mavenLocal()
     maven("https://maven.aliyun.com/repository/public")
     mavenCentral()
-    maven("https://dl.bintray.com/kotlin/kotlin-eap")
+    maven("https://status.bintray.com/kotlin/kotlin-eap")
 }
